@@ -15,13 +15,17 @@
   :image image
 })
 
+(def sprites [
+  (sprite 50 50 (image))
+  (sprite 100 100 (image))
+])
+
 (defn context [] (.getContext (canvas) "2d"))
 
 (defn clear []
   (.clearRect (context) 0 0 (.-width (canvas)) (.-height (canvas))))
 
-(defn render [sprite]
-  (clear)
+(defn render-sprite [sprite]
   (.drawImage (context) (get sprite :image) (get sprite :x) (get sprite :y)))
 
 (defn elapsed [timestamp lastTimestamp]
@@ -30,22 +34,30 @@
 (defn request-animation-frame [callback]
   (.requestAnimationFrame js/window callback))
 
-(defn render-frame []
-  (render
-    (sprite 50 50 (image))))
+(defn render-sprites
+  [sprites]
+    (if (> (count sprites) 0)
+      (do
+        (render-sprite (first sprites))
+        (render-sprites (rest sprites)))
+      ()))
+
+(defn render-frame [sprites]
+  (clear)
+  (render-sprites sprites))
 
 (defn fps [] (/ 1000 60))
 
 (defn start-loop [func timestamp lastTimestamp]
   (if (> (elapsed timestamp lastTimestamp) (fps))
     (do
-      (render-frame)
+      (func)
       (request-animation-frame (fn [t] (start-loop func t timestamp))))
     (request-animation-frame (fn [timestamp] (start-loop func timestamp lastTimestamp)))))
 
-(defn start-rendering []
-  (start-loop render-frame 0 0))
+(defn start-rendering [sprites]
+  (start-loop (fn [] (render-frame sprites)) 0 0))
 
 (defn init []
   (clear)
-  (start-rendering))
+  (start-rendering sprites))

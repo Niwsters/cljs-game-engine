@@ -24,7 +24,26 @@
   (clear)
   (.drawImage (context) (get sprite :image) (get sprite :x) (get sprite :y)))
 
-; Doesn't work. Probably need to load image before running. Use promise?
+(defn print-frame [timestamp]
+  (println timestamp))
+
+(defn elapsed [timestamp lastTimestamp]
+  (- timestamp lastTimestamp))
+
+(defn requestAnimationFrame [callback]
+  (.requestAnimationFrame js/window callback))
+
+(defn frame [timestamp lastTimestamp]
+  (if (> (elapsed timestamp lastTimestamp) 1000)
+    (render
+    (sprite 50 50 (image)))
+    nil)
+  (if (> (elapsed timestamp lastTimestamp) 1000)
+    (requestAnimationFrame (fn [t] (frame t timestamp)))
+    (requestAnimationFrame (fn [timestamp] (frame timestamp lastTimestamp)))))
+
+(defn startRendering []
+  (frame 0 0))
+
 (defn init []
-  (render
-    (sprite 50 50 (image))))
+  (startRendering))

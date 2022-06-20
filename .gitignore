@@ -4,3 +4,4 @@ target/
 .nrepl-port
 .clj-kondo
 public/js/
+.lsp

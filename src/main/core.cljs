@@ -24,26 +24,28 @@
   (clear)
   (.drawImage (context) (get sprite :image) (get sprite :x) (get sprite :y)))
 
-(defn print-frame [timestamp]
-  (println timestamp))
-
 (defn elapsed [timestamp lastTimestamp]
   (- timestamp lastTimestamp))
 
-(defn requestAnimationFrame [callback]
+(defn request-animation-frame [callback]
   (.requestAnimationFrame js/window callback))
 
-(defn frame [timestamp lastTimestamp]
-  (if (> (elapsed timestamp lastTimestamp) 1000)
-    (render
-    (sprite 50 50 (image)))
-    nil)
-  (if (> (elapsed timestamp lastTimestamp) 1000)
-    (requestAnimationFrame (fn [t] (frame t timestamp)))
-    (requestAnimationFrame (fn [timestamp] (frame timestamp lastTimestamp)))))
+(defn render-frame []
+  (render
+    (sprite 50 50 (image))))
 
-(defn startRendering []
-  (frame 0 0))
+(defn fps [] (/ 1000 60))
+
+(defn start-loop [func timestamp lastTimestamp]
+  (if (> (elapsed timestamp lastTimestamp) (fps))
+    (do
+      (render-frame)
+      (request-animation-frame (fn [t] (start-loop func t timestamp))))
+    (request-animation-frame (fn [timestamp] (start-loop func timestamp lastTimestamp)))))
+
+(defn start-rendering []
+  (start-loop render-frame 0 0))
 
 (defn init []
-  (startRendering))
+  (clear)
+  (start-rendering))

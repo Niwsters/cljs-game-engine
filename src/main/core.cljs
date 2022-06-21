@@ -1,12 +1,6 @@
 (ns core
-  (:require [context :refer [canvas]]
-            [render :refer [start-rendering]]))
-
-
-(defn- image []
-  (let [jsImage (js/Image.)]
-    (set! (.-src jsImage) "/img/opp1_jungle_tiles/sprites/humans/arctic/spr_m_arctic_earwarmer.png")
-    jsImage))
+  (:require [render :refer [start-rendering]]
+            [mouse :refer [listen-mouse-click!]]))
 
 (defn- sprite [x y image] {
   :x x
@@ -15,26 +9,19 @@
 })
 
 (def sprites [
-  (sprite 50 50 (image))
-  (sprite 100 100 (image))
+  (sprite 50 50 :arctic)
+  (sprite 100 100 :arctic)
 ])
 
-(defn- add-sprite [x y]
-  (set! sprites (conj sprites (sprite x y (image)))))
+(defn- add-sprite! [x y]
+  (->> (sprite x y :arctic)
+       (conj sprites)
+       (set! sprites)))
 
+(defn- mouse-clicked [x y]
+  (add-sprite! x y))
 
-(defn- mouse-position [event] [(.-clientX event) (.-clientY event)])
-
-(defn- mouse-x [event] (.-clientX event))
-(defn- mouse-y [event] (.-clientY event))
-
-;(defn- mouse-moved [event] (println (mouse-position event)))
-;(set! (.-onmousemove (canvas)) mouse-moved)
-
-(defn- mouse-clicked [event]
-  (println (mouse-position event))
-  (add-sprite (mouse-x event) (mouse-y event)))
-(set! (.-onclick (canvas)) mouse-clicked)
+(listen-mouse-click! mouse-clicked)
 
 
 (defn init []

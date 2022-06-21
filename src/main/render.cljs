@@ -1,8 +1,9 @@
 (ns render
-  (:require [context :refer [context clear render-image]]))
+  (:require [context :refer [context clear render-image]]
+            [image :refer [images]]))
 
 (defn- render-sprite [context sprite]
-  (render-image context (get sprite :image) (get sprite :x) (get sprite :y)))
+  (render-image context (get (images) (get sprite :image)) (get sprite :x) (get sprite :y)))
 
 (defn- request-animation-frame [callback]
   (.requestAnimationFrame js/window callback))

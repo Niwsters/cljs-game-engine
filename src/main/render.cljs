@@ -21,12 +21,14 @@
 
 (defn- fps [] (/ 1000 60))
 
-(defn- start-loop [func timestamp lastTimestamp]
-  (if (> (- timestamp lastTimestamp) (fps))
-    (do
-      (func)
-      (request-animation-frame (fn [t] (start-loop func t timestamp))))
-    (request-animation-frame (fn [timestamp] (start-loop func timestamp lastTimestamp)))))
+(defn- start-loop [func timestamp lastTimestamp canvas]
+  (if (nil? canvas)
+    ()
+    (if (> (- timestamp lastTimestamp) (fps))
+      (do
+        (func canvas)
+        (request-animation-frame (fn [t] (start-loop func t timestamp canvas))))
+      (request-animation-frame (fn [timestamp] (start-loop func timestamp lastTimestamp canvas))))))
 
 (defn start-rendering [canvas sprites]
-  (start-loop (fn [] (render-frame canvas (sprites))) 0 0))
+  (let [loop-id (start-loop (fn [canvas] (render-frame canvas (sprites))) 0 0 canvas)]))

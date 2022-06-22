@@ -15,9 +15,9 @@
       (render-sprites context (rest sprites)))
     ()))
 
-(defn- render-frame [context sprites]
-  (clear context)
-  (render-sprites context sprites))
+(defn- render-frame [canvas sprites]
+  (clear canvas)
+  (render-sprites (context canvas) sprites))
 
 (defn- fps [] (/ 1000 60))
 
@@ -28,5 +28,5 @@
       (request-animation-frame (fn [t] (start-loop func t timestamp))))
     (request-animation-frame (fn [timestamp] (start-loop func timestamp lastTimestamp)))))
 
-(defn start-rendering [sprites]
-  (start-loop (fn [] (render-frame (context) (sprites))) 0 0))
+(defn start-rendering [canvas sprites]
+  (start-loop (fn [] (render-frame canvas (sprites))) 0 0))

@@ -31,4 +31,4 @@
       (request-animation-frame (fn [timestamp] (start-loop func timestamp lastTimestamp canvas))))))
 
 (defn start-rendering [canvas sprites]
-  (let [loop-id (start-loop (fn [canvas] (render-frame canvas (sprites))) 0 0 canvas)]))
+  (start-loop (fn [canvas] (render-frame canvas (sprites))) 0 0 canvas))

@@ -1,20 +1,8 @@
 (ns core
   (:require [components.game :refer [game]]
+            [components.editor :refer [editor]]
             [reagent.core :as r]
             [reagent.dom :as rd]))
-
-(defn- sprite [x y image] {
-  :x x
-  :y y
-  :image image
-})
-
-(def sprites [
-  (sprite 50 50 :arctic)
-  (sprite 100 100 :arctic)
-])
-
-(defn- editor [] [:div "editor"])
 
 (defn- route [page]
   (case page

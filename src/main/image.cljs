@@ -21,3 +21,6 @@
 (defn image-component [image-id]
   [:img
    {:src (get (image-srcs) image-id)}])
+
+(defn image-ids []
+  (keys (image-srcs)))

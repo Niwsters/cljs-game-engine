@@ -1,4 +1,4 @@
-(ns components.canvas
+(ns canvas
   (:require
    [render :refer [start-rendering]]))
 

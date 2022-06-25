@@ -1,6 +1,6 @@
 (ns core
-  (:require [components.game :refer [game]]
-            [components.editor :refer [editor]]
+  (:require [game.game :refer [game]]
+            [editor.editor :refer [editor]]
             [reagent.core :as r]
             [reagent.dom :as rd]))
 
@@ -21,5 +21,7 @@
   (rd/render [component]
     (.getElementById js/document "game")))
 
+(mount app)
+
 (defn init []
-  (mount app))
+  ())

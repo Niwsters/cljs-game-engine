@@ -1,6 +1,6 @@
-(ns components.game
+(ns game.game 
   (:require 
-   [components.canvas :refer [canvas]]
+   [canvas :refer [canvas]]
    [mouse :refer [listen-mouse-click!]]
    [sprite :refer [sprite]]))
 
@@ -24,4 +24,4 @@
 
 (defn game []
   (let [sprites (init-sprites)]
-    (canvas sprites (fn [canvas] (start-game sprites canvas)))))
+    (canvas (fn [] @sprites) (fn [canvas] (start-game sprites canvas)))))

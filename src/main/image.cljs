@@ -6,7 +6,8 @@
     jsImage))
 
 (defn- image-srcs []
-  {:arctic "/img/opp1_jungle_tiles/sprites/humans/arctic/spr_m_arctic_earwarmer.png"})
+  {:arctic "/img/opp1_jungle_tiles/sprites/humans/arctic/spr_m_arctic_earwarmer.png"
+   :arctic-old "/img/opp1_jungle_tiles/sprites/humans/arctic/spr_f_arctic_old.png"})
 
 (defn- images []
   {:arctic (image (get (image-srcs) :arctic))})

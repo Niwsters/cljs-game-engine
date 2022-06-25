@@ -10,7 +10,7 @@
     :editor editor))
 
 (defn- app []
-  (let [current-page (r/atom :game)]
+  (let [current-page (r/atom :editor)]
     (fn []
       [:div
        [:button {:on-click #(swap! current-page (fn [] :game))} "game"]

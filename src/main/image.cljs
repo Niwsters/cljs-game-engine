@@ -10,7 +10,10 @@
    :arctic-old "/img/opp1_jungle_tiles/sprites/humans/arctic/spr_f_arctic_old.png"})
 
 (defn- images []
-  {:arctic (image (get (image-srcs) :arctic))})
+  (reduce-kv (fn [images id src]
+               (assoc images id (image src)))
+             {}
+             (image-srcs)))
 
 (defn get-image [image-id]
   (get (images) image-id))

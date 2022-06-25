@@ -1,7 +1,7 @@
 (ns mouse)
 
-(defn- mouse-x [event] (.-clientX event))
-(defn- mouse-y [event] (.-clientY event))
+(defn- mouse-x [event] (.-offsetX event))
+(defn- mouse-y [event] (.-offsetY event))
 
 (defn listen-mouse-click! [canvas func]
   (set! (.-onclick canvas)

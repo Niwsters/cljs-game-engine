@@ -1,6 +1,13 @@
 (ns render
-  (:require [context :refer [context clear render-image]]
+  (:require [context :refer [context clear]]
             [image :refer [get-image]]))
+
+(defn- render-image [context image x y]
+  (.drawImage
+    context
+    image
+    (- x (/ (.-width image) 2))
+    (- y (/ (.-height image) 2))))
 
 (defn- render-sprite [context sprite]
   (render-image context (get-image (get sprite :image)) (get sprite :x) (get sprite :y)))

@@ -52,7 +52,6 @@
        (conj sprites)))
 
 (defn editor-add-sprite [state x y]
-  (println state)
   (assoc state
          :sprites
          (add-sprite
